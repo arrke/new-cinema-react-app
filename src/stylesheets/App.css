@@ -1,0 +1,71 @@
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin: 20px;
+}
+
+.row .number {
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.row .number_avaible {
+  background-color: green;
+  cursor: pointer;
+}
+
+.row .number_picked {
+  background-color: yellow;
+  cursor: pointer;
+}
+
+.row .number_reserved {
+  background-color: red;
+}
+
+.alert {
+  font-size: 70%;
+  color: red;
+}
+.AddMovie {
+  font-size: 2em;
+  border-radius: 30%;
+  margin: 10px;
+  padding: 10px;
+}
+
+.Modal_Edit {
+  width: 50%;
+  height: 80%;
+  position: fixed;
+  left: 30em;
+  top: 5em;
+  background-color: aqua;
+  z-index: 5;
+  border-radius: 10%;
+  padding: 40px;
+}
+
+.Modal_Edit_Form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  font-size: 2em;
+}
+.Modal_Edit_Form input {
+  font-size: 1em;
+  width: 50%;
+}
+
+.Modal_zapisz {
+  font-size: 1em;
+  margin: 10px;
+}
+.Screen {
+  margin: 20px;
+  margin-bottom: 40px;
+  width: 30%;
+  height: 1em;
+  background-color: blue;
+}

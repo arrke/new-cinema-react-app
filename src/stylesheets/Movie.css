@@ -1,0 +1,26 @@
+.Movie {
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+  position: relative;
+  z-index: 1;
+}
+.Movie_img {
+  width: 13em;
+  height: 18em;
+}
+.Movies {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.Movie_information {
+  display: flex;
+  flex-direction: column;
+  transition: all 1s ease-out;
+  position: absolute;
+  color: white;
+  font-weight: 700;
+  padding: 30px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
