@@ -27,7 +27,7 @@ function App() {
     };
     fetchData()
   }, [])
-  console.log(repertoires)
+
   return (
     <BrowserRouter>
     <div className="App">

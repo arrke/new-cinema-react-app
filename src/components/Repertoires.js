@@ -51,16 +51,20 @@ export function Repertoires({list}){
     >
       {filteredRepertoires.map(repertoire => (
         <Link
-          style={{ display: "block", margin: "1rem 0", width: 20+"%"}}
+          style={{ margin: "1rem 0", width: 20+"%"}}
           to={`/repertoires/${repertoire.id}`}
           key={repertoire.id}
+          className="LinkToRepertoire"
         >
-          {repertoire.movie.title} Dnia: {repertoire.date} Godz: {repertoire.hour}
+          <span> {repertoire.movie.title} </span> <span> Dnia: {repertoire.date}</span> <span>Godz: {repertoire.hour}</span>
         </Link>
       ))}
     </nav>
     <Outlet />
-    </div>:"Brak seansów na wybrany dzień"}
+    </div>:
+    <div className="noSeanses">
+    "Brak seansów na wybrany dzień"
+    </div>}
     </>
   );
 }

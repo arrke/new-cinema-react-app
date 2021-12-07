@@ -7,10 +7,10 @@ export function NavBar(){
       paddingBottom: "1rem"
     }}
     >
-    <Link to="/">HOME</Link> |{" "}
-    <Link to="/movies">Filmy</Link> |{" "}
-    <Link to="/screening-rooms">Sale</Link> |{" "}
-    <Link to="/repertoires">Repertuar</Link>
+    <Link className="NavLink"to="/">HOME</Link> |{" "}
+    <Link className="NavLink"to="/movies">Filmy</Link> |{" "}
+    <Link className="NavLink"to="/screening-rooms">Sale</Link> |{" "}
+    <Link className="NavLink"to="/repertoires">Repertuar</Link>
     <Outlet />
   </nav>
 

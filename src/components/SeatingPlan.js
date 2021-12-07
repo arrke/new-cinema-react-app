@@ -62,6 +62,7 @@ export function SeatingPlan(props){
     array.forEach (innerArray => innerArray.forEach(element => returning.push(element)))
     return returning
   }
+  
   const seats = getSeats()
   return(
     <>

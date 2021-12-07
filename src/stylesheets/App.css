@@ -83,3 +83,37 @@
 .ModalAddRepertoire select option {
   font-size: 1.5em;
 }
+.ScreeningRoom {
+  border: 1px solid black;
+  margin: 20px;
+  padding: 30px;
+  font-size: 25px;
+}
+
+.NavLink {
+  font-size: 30px;
+  margin: 0 5px;
+  padding: 10px;
+  transition: all 0.5s ease-in;
+}
+.NavLink:hover {
+  background-color: black;
+  color: white;
+}
+
+.noSeanses {
+  width: 100vw;
+  height: 92vh;
+  background-color: blanchedalmond;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 8em;
+}
+.LinkToRepertoire {
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
