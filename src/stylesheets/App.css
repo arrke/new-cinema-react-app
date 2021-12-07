@@ -69,3 +69,17 @@
   height: 1em;
   background-color: blue;
 }
+
+.ModalAddRepertoire {
+  width: 100%;
+  height: 90%;
+  position: fixed;
+  background-color: aqua;
+  z-index: 5;
+  padding: 20px;
+  font-size: 1.5em;
+}
+.ModalAddRepertoire input,
+.ModalAddRepertoire select option {
+  font-size: 1.5em;
+}

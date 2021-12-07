@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types'
 import '../stylesheets/Movie.css'
 import { useState } from 'react'
-import {updateMovie} from '../api/MoviesApi'
 import { ModalEditFilm } from './ModalEditFilm'
-
 export function Movie(props){
-  const id = props.id
-  const[title,setTitle] = useState(props.title)
-  const[runtime, setRuntime] = useState(props.runtime)
-  const[img, setImg] = useState(props.img)
+
+  const{
+    id, 
+    title, runtime, img, handleSave
+  } = props
 
   const [edit,setEdit] = useState(false)
   function showMovieInformation(e){
@@ -19,24 +18,19 @@ export function Movie(props){
     e.target.parentNode.lastChild.style.display = "none"
   }
 
-  function handleSave(newTitle, newRuntime){
-    updateMovie(id,newTitle, newRuntime, img).then(res => {
-      console.log(res)
-      setImg(res.image)
-      setRuntime(res.runtime)
-      setTitle(res.title)
-      setEdit(prevState => !prevState)
-    })
-  }
   function handleSetEdit(){
     setEdit(prevState => !prevState)
   }
 
+  function save(newTitle, newRuntime, image){
+    handleSave(id, newTitle, newRuntime, image)
+  }
+
   function getHoursAndMinutes(time){
-    var hours = (time / 60);
-    var rhours = Math.floor(hours);
-    var minutes = (hours - rhours) * 60;
-    var rminutes = Math.round(minutes);
+    const hours = (time / 60);
+    const rhours = Math.floor(hours);
+    const minutes = (hours - rhours) * 60;
+    const rminutes = Math.round(minutes);
     return rhours + " h " + rminutes + " min. "
   }
   return(
@@ -52,7 +46,7 @@ export function Movie(props){
     </div>
     </div>
     {edit?
-    <ModalEditFilm key={id} title={title} image={img} runtime={runtime} save={handleSave} changeEdit={handleSetEdit}/>:
+    <ModalEditFilm key={id} title={title} image={img} runtime={runtime} save={save} changeEdit={handleSetEdit}/>:
     ""}
     </>
   );

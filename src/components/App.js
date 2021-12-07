@@ -3,55 +3,31 @@ import '../stylesheets/App.css';
 import {NavBar} from './NavBar';
 import { Movies } from "./Movies";
 import { ScreeningRooms } from "./ScreeningRooms";
-import { getAllBranches } from '../api/BranchesApi';
-import * as MoviesApi from '../api/MoviesApi'
 import { ScreeningRoom } from './ScreeningRoom';
-import {useState, useEffect} from 'react';
-import { getAllRepertoire } from '../api/RepertoireApi';
+import { useEffect} from 'react';
 import { Repertoires } from './Repertoires';
 import {Repertoire} from './Repertoire'
+import {fetchMoviesFromApi, fetchRepertoires, fetchScreenings} from '../actions'
+import { useSelector, useDispatch } from 'react-redux'
 
 function App() {
-  const [screeningRooms, setScreenings]= useState([]);
-  const [movies, setMovies]= useState([]);
-  const [repertoire, setRepertoire] = useState([]);
+  const movies = useSelector(state => state.movies)
+  const screeningRooms = useSelector(state => state.screenings);
+  const repertoires = useSelector(state => state.repertoires)
+  const dispatch = useDispatch()
   useEffect(() => {
     const fetchData = async () => {
       try{
-        const response = await getAllBranches()
-        setScreenings([...response])
+        dispatch(fetchScreenings())
+        dispatch(fetchMoviesFromApi())
+        dispatch(fetchRepertoires())
       } catch(err){
         console.log(err)
       }
     };
     fetchData()
   }, [])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try{
-        const response = await MoviesApi.getAllMovies()
-        setMovies([...response])
-      } catch(err){
-        console.log(err)
-      }
-    };
-    fetchData()
-  }, [])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try{
-        const response = await getAllRepertoire()
-        setRepertoire([...response])
-      } catch(err){
-        console.log(err)
-      }
-    };
-    fetchData()
-  }, [])
-  console.log(repertoire)
-
+  console.log(repertoires)
   return (
     <BrowserRouter>
     <div className="App">
@@ -62,7 +38,7 @@ function App() {
       <Route path="screening-rooms" element={<ScreeningRooms screeningRooms={screeningRooms}/>} >
         <Route path=":screeningId" element={<ScreeningRoom />} />
       </Route>
-      <Route path="repertoires" element={<Repertoires list={repertoire}/>}>
+      <Route path="repertoires" element={<Repertoires list={repertoires}/>}>
         <Route path=':idRep' element={<Repertoire/>}/>
       </Route>
       

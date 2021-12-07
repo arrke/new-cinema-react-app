@@ -1,9 +1,9 @@
 import { Movie } from "./Movie";
 import { ScreeningRoom } from './ScreeningRoom'
-import { useState, useEffect } from "react";
-import {Link} from 'react-router-dom'
 import { useParams } from "react-router-dom";
-import {getRepertoireById} from '../api/RepertoireApi'
+import { useSelector,useDispatch } from "react-redux";
+import { fetchRepertoires } from "../actions";
+import { useEffect } from "react";
 import {Seats} from './Seats'
 import { BuyTicket } from "./BuyTicket";
 
@@ -11,31 +11,29 @@ import { BuyTicket } from "./BuyTicket";
 export function Repertoire(){
   
   let params = useParams();
-  const [repertoire, setRepertoire] = useState([])
-
-  let id = params.idRep
-  console.log(id)
+  const repertoires = useSelector(state => state.repertoires)
+  const dispatch = useDispatch()
   useEffect(() => {
     const fetchData = async () => {
       try{
-        if(!params.idRep)
-          throw new Error('PARAM INVALID')
-        const response = await getRepertoireById(params.idRep)
-        setRepertoire(response[0])
+        if(repertoires === undefined)
+          dispatch(fetchRepertoires())
       } catch(err){
         console.log(err)
       }
     };
-    fetchData(params.idRep)
-  }, params.idRep)
+    fetchData()
+  }, [])
+  
+  const repertoire = repertoires.find(rep => rep.id == params.idRep)
 
   const getAvailableSeats = () =>{
-    return repertoire.branch.seatsNo - repertoire.reserved_seats.length
+    console.log(repertoire.reserved_seats)
+    return repertoire.branch.seatsNo - repertoire.reserved_seats.map(y => y.seats.map(seats => seats.size)).map(elem => elem.length).reduce((p,n) => p+n)
   }
-  console.log(repertoire)
   return(
     <div>
-      {repertoire.length != 0?
+      {repertoire?
        <div style={{
         border: "solid 1px",
         paddingBottom: "1rem"
@@ -47,13 +45,13 @@ export function Repertoire(){
             Sala: <ScreeningRoom name={repertoire.branch.name} seatsNo={repertoire.branch.seatsNo}/>
             
             {repertoire.reserved_seats.map(e=>{return e.seatId}).length !== 0?
-              <Seats seats={repertoire.reserved_seats.map(e=>{return e.seat})}/>
+              <Seats seats={repertoire.reserved_seats.map(e=>{return e.seats})}/>
               :
               ''
             }
   
             {getAvailableSeats() !== 0?
-              <BuyTicket key={repertoire.id} movie={repertoire.movie} reservedSeats={repertoire.reserved_seats} screeningRoom= {repertoire.branch}/> 
+              <BuyTicket key={repertoire.id} screeningId = {repertoire.id} reservedSeats={repertoire.reserved_seats} screeningRoom= {repertoire.branch}/> 
             :
             <div> 
               Bilety wyprzedane

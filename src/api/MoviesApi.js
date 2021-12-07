@@ -28,10 +28,9 @@ export const deleteMovie = async (id) => {
   .catch((error) => console.log(error))
 }
 
-export const addMovie = async (id,title, runtime, image) => {
+export const addMovie = async (title, runtime, image) => {
   return await axios.post("http://localhost:3000/movies",
   {
-    id: id,
     title: title,
     runtime: runtime,
     image: image

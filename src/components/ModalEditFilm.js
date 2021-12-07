@@ -1,19 +1,17 @@
+import PropTypes from 'prop-types'
+
 export function ModalEditFilm({title,runtime,image,save, changeEdit}){
   function handleSave(e){
     e.preventDefault()
-    const newTitle = document.getElementById("newTitle").value;
-    const newRuntime = Number(document.getElementById("newRuntime").value);
-    const img = document.getElementById("img").value
-    save(newTitle, newRuntime, img)
 
     if(document.getElementById("alert_nazwa").innerHTML === "" && 
     document.getElementById("alert_czas").innerHTML === "" &&
     document.getElementById("alert_src").innerHTML === '' 
     ){
-      const title = document.getElementById("newTitle").value
-      const runtime = document.getElementById("newRuntime").value
+      const newTitle = document.getElementById("newTitle").value;
+      const newRuntime = Number(document.getElementById("newRuntime").value);
       const img = document.getElementById("img").value
-      if(title && runtime && img){
+      if(newTitle && newRuntime && img){
         save(newTitle, newRuntime, img)
       }
     }
@@ -68,3 +66,13 @@ export function ModalEditFilm({title,runtime,image,save, changeEdit}){
     </div>
   );
 }
+
+
+ModalEditFilm.propTypes = {
+  title: PropTypes.string.isRequired,
+  runtime: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
+  save: PropTypes.func.isRequired, 
+  changeEdit: PropTypes.func.isRequired
+}
+

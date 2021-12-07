@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import PropTypes from 'prop-types'
+
 
 export function SeatingPlan(props){
   const{
@@ -6,7 +8,6 @@ export function SeatingPlan(props){
     handleBook,
     screeningRoom
   } = props
-
   const [pickedSeats, setSeats] = useState([]);
   const [name, setName] = useState('')
   function handlePickedSeats(e){
@@ -28,7 +29,7 @@ export function SeatingPlan(props){
 
   function handleName(name){
     let splitedName = name.split(' ')
-    console.log(splitedName)
+
     document.getElementById('alert').innerHTML = ''
     if(splitedName.length !== 2 || !splitedName[1].length){
       document.getElementById("alert").innerHTML="Proszę o podanie poprawnych danych"
@@ -46,10 +47,7 @@ export function SeatingPlan(props){
   }
   function bookSeats(e){
     e.preventDefault()
-    if(name && pickedSeats){
-      
-    }
-    else{
+    if(name && pickedSeats && !document.getElementById("alert").innerHTML){
       handleBook(pickedSeats, name)
     }
   }
@@ -57,7 +55,14 @@ export function SeatingPlan(props){
   function getNumbersInRows(){
     return Number(screeningRoom.seatsNo) / Number(screeningRoom.rows)
   }
-  console.log(reservedSeats)
+
+  function getSeats(){
+    let array = reservedSeats.map(innerArray => innerArray.seats.map(seats => seats))
+    let returning = []
+    array.forEach (innerArray => innerArray.forEach(element => returning.push(element)))
+    return returning
+  }
+  const seats = getSeats()
   return(
     <>
     <div className="Screen"/>
@@ -66,8 +71,8 @@ export function SeatingPlan(props){
         <div id={row} className="row">
           RZĄD {row}
           {Array(getNumbersInRows()).fill().map((_, i) => i+1).map(number => (
-            <div id={number} className={`number number_${reservedSeats.find(e => 
-              (e.seat.row === row && e.seat.number === number)
+            <div id={number} className={`number number_${seats.find(e => 
+              (e.row === row && e.number === number)
             )?'reserved':'avaible'}`}
             onClick={(e) => handlePickedSeats(e)}
             >
@@ -95,4 +100,10 @@ export function SeatingPlan(props){
     </div>
     </>
   );
+}
+
+SeatingPlan.propTypes ={
+  reservedSeats: PropTypes.node.isRequired,
+  handleBook: PropTypes.node.isRequired,
+  screeningRoom:  PropTypes.node.isRequired
 }

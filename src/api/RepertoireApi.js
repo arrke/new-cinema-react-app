@@ -13,3 +13,15 @@ export const getRepertoireById = async (id) => {
   .catch((error) => console.log(error))
   return screening
 }
+
+export const addRepertoire = async(movieId, branchId, date, hour ) => {
+  const screening =  await axios.post(`http://localhost:3000/screenings`,{
+    movieId: movieId,
+    branchId: branchId,
+    date: date,
+    hour: hour
+  })
+  .then((response) => {return response.data})
+  .catch((error) => console.log(error))
+  return screening
+}

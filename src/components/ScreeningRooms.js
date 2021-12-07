@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import { ScreeningRoom } from './ScreeningRoom';
 export function ScreeningRooms({screeningRooms}){
-  console.log(screeningRooms)
   return(
     <div>
       {screeningRooms.map(room => (

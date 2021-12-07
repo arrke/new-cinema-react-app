@@ -1,22 +1,25 @@
-import { useParams } from 'react-router';
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import {SeatingPlan} from './SeatingPlan'
-import { getReservedSeetsById } from '../api/ReservedSeatsApi';
-
+import { makeReservation } from '../actions'
+import { useDispatch } from 'react-redux'
+import PropTypes from 'prop-types'
 export function BuyTicket(props){
   const{
     reservedSeats,
-    movie,
-    screeningRoom
+    screeningRoom,
+    screeningId
   } = props
   const[visible, setVisible] = useState(false)
+  const dispatch = useDispatch()
   function handleBook(seats, name){
-    console.log(seats,name, movie.title, screeningRoom.id, screeningRoom.name)
+    dispatch(makeReservation(seats,screeningRoom.id,name,screeningId))
+    alert("Zabookowałeś bilety z miejscami "+ seats.map(seat => `Rząd ${seat.row} Numer: ${seat.number} `))
   }
 
   function handleVisible(){
     setVisible(!visible)
   }
+
   return(
     <div>
       <button onClick={e=>handleVisible()}>
@@ -28,4 +31,10 @@ export function BuyTicket(props){
       ''}
     </div>
   );
+}
+
+BuyTicket.propTypes = {
+  reservedSeats: PropTypes.node.isRequired,
+  screeningRoom: PropTypes.node.isRequired,
+  screeningId: PropTypes.number.isRequired
 }
